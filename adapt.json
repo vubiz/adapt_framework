@@ -1,5 +1,6 @@
 {
     "dependencies": {
+        "adapt-contrib-boot": "*",
         "adapt-contrib-core": "*",
         "adapt-contrib-navigation": "*",
         "adapt-contrib-notify": "*",

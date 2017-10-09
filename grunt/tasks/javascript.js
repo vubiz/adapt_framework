@@ -26,6 +26,7 @@ module.exports = function(grunt) {
 		options.shim = options.shim || {};
 		options.shim[options.pluginsModule] = {deps:[]};
 		helpers.getPlugins().forEach((plugin)=>{
+			if (!plugin._bower.main) return;
 			var requireJSMainPath = path.join(plugin.name, plugin._bower.main);
 			var ext = path.extname(requireJSMainPath);
 			var requireJSMainPathNoExt = requireJSMainPath.slice(0, -ext.length).replace(convertSlashes, "/");
