@@ -2,6 +2,7 @@ var _ = require('underscore');
 var chalk = require('chalk');
 var fs = require('fs');
 var path = require('path');
+var fileOrder = require("grunt-file-order");
 
 module.exports = function(grunt) {
 
@@ -92,6 +93,7 @@ module.exports = function(grunt) {
 
         ],
         pluginTypes: [
+            'core',
             'components',
             'extensions',
             'menu',
@@ -184,7 +186,7 @@ module.exports = function(grunt) {
     };
 
     exports.isPluginInstalled = function(pluginName) {
-        var types = ['components','extensions','theme','menu'];
+        var types = exports.defaults.pluginTypes; //['components','extensions','theme','menu'];
         for(var i = 0, len = types.length; i < len; i++) {
             var plugins = grunt.option(types[i]) || this.getInstalledPluginsByType(types[i]);
             if(plugins.indexOf(pluginName) !== -1) return true;
@@ -257,6 +259,30 @@ module.exports = function(grunt) {
 
     exports.scriptSafeFilter = function(filepath) {
         return exports.isPluginScriptSafe(filepath);
+    };
+
+    var sourcedir = grunt.option('sourcedir') || exports.defaults.sourcedir;
+
+    var Plugins = require("./plugins");
+    var plugins = new Plugins({
+        dir: sourcedir, 
+        types: exports.defaults.pluginTypes
+    });
+
+    exports.getPlugins = function() {
+        return plugins;
+    };
+
+    exports.sortPathsByPlugin = function(filepaths) {
+        var sourcedir = appendSlash(grunt.option('sourcedir')) || exports.defaults.sourcedir;
+        var pluginOrder = plugins.getOrder();
+
+        var sorted = filepaths.sort(function(a, b) {
+            var pluginNameA = a.slice(sourcedir.length, a.indexOf("/", sourcedir.length+1));
+            var pluginNameB = b.slice(sourcedir.length, b.indexOf("/", sourcedir.length+1));
+            return pluginOrder[pluginNameA] - pluginOrder[pluginNameB];
+        });
+        return sorted;
     };
 
     return exports;

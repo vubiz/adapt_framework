@@ -1,5 +1,9 @@
 {
     "dependencies": {
+        "adapt-contrib-core": "*",
+        "adapt-contrib-navigation": "*",
+        "adapt-contrib-notify": "*",
+        "adapt-contrib-drawer": "*",
         "adapt-contrib-vanilla": "*",
         "adapt-contrib-text": "*",
         "adapt-contrib-narrative": "*",

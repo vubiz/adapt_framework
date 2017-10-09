@@ -17,12 +17,11 @@ module.exports = function(grunt) {
             files: [
                 {
                     src: [
-                        '<%= sourcedir %>core/**/*.hbs',
-                        '<%= sourcedir %>components/**/*.hbs',
-                        '<%= sourcedir %>extensions/**/*.hbs',
-                        '<%= sourcedir %>menu/<%= menu %>/**/*.hbs',
-                        '<%= sourcedir %>theme/<%= theme %>/**/*.hbs'
+                        '<%= sourcedir %>*/templates/**/*.hbs'
                     ],
+                    order: function(filepaths) {
+                        return grunt.config('helpers').sortPathsByPlugin(filepaths);
+                    },
                     follow: true,
                     dest: '<%= outputdir %>templates.js',
                     filter: function(filepath) {

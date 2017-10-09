@@ -1,7 +1,6 @@
 module.exports = {
     src: [
-        'src/**/*.js',
-        '!src/core/js/libraries/*.js'
+        'src/*/js/**/*.js'
     ],
     options: {
         reporter: "unix",

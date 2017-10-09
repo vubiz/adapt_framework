@@ -6,54 +6,51 @@ module.exports = function(grunt) {
 
 		var requirejs = require('requirejs');
 		var _ = require('underscore');
+		var namespaces = require("./javascript/namespaces");
+		var configurations  = require("./javascript/configurations");
 		var path = require("path");
 		var fs = require("fs");
 		var done = this.async();
 		var options = this.options({});
+		var helpers = grunt.config("helpers");
 
-		if (options.plugins) {
-			var pluginsClientSidePatch = '';
+		var pluginsClientSidePatch = '';
 
-			var doesPluginPathExists = true;
-			try {
-				fs.statSync(options.pluginsPath);
-			} catch(e) {
-				doesPluginPathExists = false;
-			}
-
-			if (!doesPluginPathExists) {
-				//make endpoint for plugin attachment
-				//apply client side patch
-				fs.writeFileSync(options.pluginsPath, pluginsClientSidePatch);
-			}
-
-			options.shim = options.shim || {};
-			options.shim[options.pluginsModule] = {deps:[]};
-
-			for (var i = 0, l = options.plugins.length; i < l; i++) {
-				var src = options.plugins[i];
-				grunt.file.expand({ filter: options.pluginsFilter }, src).forEach(function(bowerJSONPath) {
-
-					if (bowerJSONPath === undefined) return;
-
-					var pluginPath = path.dirname(bowerJSONPath);
-
-					var bowerJSON = grunt.file.readJSON(bowerJSONPath);
-
-					var requireJSRootPath = pluginPath.substr(options.baseUrl.length);
-
-					var requireJSMainPath = path.join(requireJSRootPath, bowerJSON.main);
-
-					var ext = path.extname(requireJSMainPath);
-
-					var requireJSMainPathNoExt = requireJSMainPath.slice(0, -ext.length).replace(convertSlashes, "/");
-
-					options.shim[options.pluginsModule].deps.push(requireJSMainPathNoExt);
-
-				});
-			}
+		if (!fs.existsSync(options.pluginsPath)) {
+			// make endpoint for plugin attachment 'plugins.js'
+			// apply client side patch
+			fs.writeFileSync(options.pluginsPath, pluginsClientSidePatch);
 		}
 
+		// generate dependencies for plugins endpoint 'plugins.js' from plugins object
+		options.shim = options.shim || {};
+		options.shim[options.pluginsModule] = {deps:[]};
+		helpers.getPlugins().forEach((plugin)=>{
+			var requireJSMainPath = path.join(plugin.name, plugin._bower.main);
+			var ext = path.extname(requireJSMainPath);
+			var requireJSMainPathNoExt = requireJSMainPath.slice(0, -ext.length).replace(convertSlashes, "/");
+			options.shim[options.pluginsModule].deps.push(requireJSMainPathNoExt);
+		});
+
+		// add all config.js files from plugins to requirejs config
+		var sourcedir = grunt.config("sourcedir");
+		configurations.addConfigFiles(sourcedir, options);
+
+		// fix and warn about namespaces from plugins config.js map[*] configuration
+		var namespacesConfig = configurations.getNamespacesConfig(sourcedir);
+		var erroredFor = {};
+		options.onBuildRead = function (moduleName, path, contents) {
+			namespaces.replace(contents, namespacesConfig, (rtn, modified)=>{
+				contents = rtn;
+				if (_.keys(modified).length && !erroredFor[moduleName]) {
+					erroredFor[moduleName] = true;
+					grunt.log.warn(`namespaces in '${moduleName}' change '${_.keys(modified).join('\',\'') }' to '${_.values(modified).join('\',\'') }'`)
+				}
+			});
+			return contents;
+		};
+
+		// compile code
 		requirejs.optimize(options, function() {
 			done();
 		}, function(error) {

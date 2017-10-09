@@ -10,9 +10,10 @@ module.exports = function(grunt) {
 
 			var rootPath = path.join(path.resolve(options.baseUrl), "../").replace(convertSlashes, "/");
 
-			var imports = "";
+			var imports = [];
 			
-			if (options.src && options.config) {
+			if (options.config) {
+
 				var screenSize = {
 					"small": 520,
 					"medium": 760,
@@ -25,66 +26,64 @@ module.exports = function(grunt) {
 
 				console.log("screen size:", screenSize);
 
-				imports += "\n@adapt-device-small:"+screenSize.small+";";
-				imports += "\n@adapt-device-medium:"+screenSize.medium+";";
-				imports += "\n@adapt-device-large:"+screenSize.large+";\n";
+				imports.push("@adapt-device-small:"+screenSize.small+";");
+				imports.push("@adapt-device-medium:"+screenSize.medium+";");
+				imports.push("@adapt-device-large:"+screenSize.large+";\n");
+
 			}
 
-			if (options.mandatory) {
-				for (var i = 0, l = options.mandatory.length; i < l; i++) {
-					var src = options.mandatory[i];
-					grunt.file.expand({follow: true}, src).forEach(function(lessPath) {
-						lessPath = path.normalize(lessPath);
-						var trimmed = lessPath.substr(rootPath.length);
-						imports+= "@import '" + trimmed + "';\n";
-					});	
-				}
-			}
+			this.files.forEach((opts)=>{
 
-			if (options.src) {
-				for (var i = 0, l = options.src.length; i < l; i++) {
-					var src = options.src[i];
-					grunt.file.expand({follow: true, filter: options.filter}, src).forEach(function(lessPath) {
-						lessPath = path.normalize(lessPath);
-						var trimmed = lessPath.substr(rootPath.length);
-						imports+= "@import '" + trimmed + "';\n";
-					});	
-				}
-			}
+				opts.src.forEach((lessPath)=>{
+					lessPath = path.normalize(lessPath);
+					var trimmed = lessPath.substr(rootPath.length);
+					imports.push("@import '" + trimmed + "';");
+				});
 
-			var sourcemaps;
-			if (options.sourcemaps) { 
-				sourcemaps = {
-					"sourceMap": {
-						"sourceMapFileInline": false,
-						"outputSourceFiles": true,
-						"sourceMapBasepath": "src",
-						"sourceMapURL": options.mapFilename,
-					} 
-				};
-			} else {
-				var sourceMapPath = path.join(options.dest, options.mapFilename);
-				if (grunt.file.exists(sourceMapPath)) grunt.file.delete(sourceMapPath, {force:true});
-				if (grunt.file.exists(sourceMapPath+".imports")) grunt.file.delete(sourceMapPath+".imports", {force:true});
-			}
-
-			var lessOptions = _.extend({ "compress": options.compress }, sourcemaps);
-				
-			less.render(imports, lessOptions, complete);
-
-			function complete(error, output) {
-				if (error) {
-					grunt.fail.fatal(JSON.stringify(error, null, 1));
-					return;
+				var sourcemaps;
+				if (options.sourcemaps) { 
+					sourcemaps = {
+						"sourceMap": {
+							"sourceMapFileInline": false,
+							"outputSourceFiles": true,
+							"sourceMapBasepath": "src",
+							"sourceMapURL": opts.dest+".map"
+						} 
+					};
+				} else {
+					var sourceMapPath = opts.dest+".map";
+					if (grunt.file.exists(sourceMapPath)) grunt.file.delete(sourceMapPath, {force:true});
+					if (grunt.file.exists(sourceMapPath+".imports")) grunt.file.delete(sourceMapPath+".imports", {force:true});
 				}
 
-				grunt.file.write(path.join(options.dest, options.cssFilename), output.css);
-				
-				if (output.map) {
-					grunt.file.write(path.join(options.dest, options.mapFilename)+".imports", imports);
-					grunt.file.write(path.join(options.dest, options.mapFilename), output.map);
-				}
+				var lessString = imports.join("\n");
+				var lessOptions = _.extend({ "compress": options.compress }, sourcemaps);
+				less.render(lessString, lessOptions, (error, output)=>{
+					
+					if (error) {
+						grunt.fail.fatal(JSON.stringify(error, null, 1));
+						return;
+					}
+
+					grunt.file.write(opts.dest, output.css);
+					
+					if (output.map) {
+						grunt.file.write(opts.dest+".map.imports", imports);
+						grunt.file.write(opts.dest+".map", output.map);
+					}
+
+					complete();
+
+				});
+
+			});
+
+			var completed = 0;
+			var complete = ()=>{
+				completed++;
+				if (this.files.length !== completed) return;
 				done();
-			}
-      });
+			};
+
+	});
 }

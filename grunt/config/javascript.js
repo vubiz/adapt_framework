@@ -2,17 +2,9 @@ module.exports = function (grunt, options) {
     return {
         dev: {
             options: {
-                name: 'core/js/app',
+                name: 'plugins',
                 baseUrl: '<%= sourcedir %>',
-                mainConfigFile: './config.js',
                 out: '<%= outputdir %>adapt/js/adapt.min.js',
-                //fetch these bower plugins an add them as dependencies to the app.js
-                plugins: [
-                    '<%= sourcedir %>components/*/bower.json',
-                    '<%= sourcedir %>extensions/*/bower.json',
-                    '<%= sourcedir %>menu/<%= menu %>/bower.json',
-                    '<%= sourcedir %>theme/<%= theme %>/bower.json'
-                ],
                 pluginsPath: '<%= sourcedir %>plugins.js',
                 pluginsModule: 'plugins',
                 pluginsFilter: function(filepath) {
@@ -24,24 +16,17 @@ module.exports = function (grunt, options) {
             },
             //newer configuration
             files: {
-              '<%= outputdir %>adapt/js/adapt.min.js': [
+              src: [
                 '<%= sourcedir %>/**/*.js'
-              ]
+              ],
+              dest: '<%= outputdir %>adapt/js/adapt.min.js'
             }
         },
         compile: {
             options: {
-                name: 'core/js/app',
+                name: 'adapt-contrib-core/js/app',
                 baseUrl: '<%= sourcedir %>',
-                mainConfigFile: './config.js',
                 out: '<%= outputdir %>adapt/js/adapt.min.js',
-                //fetch these bower plugins an add them as dependencies to the app.js
-                plugins: [
-                    '<%= sourcedir %>components/*/bower.json',
-                    '<%= sourcedir %>extensions/*/bower.json',
-                    '<%= sourcedir %>menu/<%= menu %>/bower.json',
-                    '<%= sourcedir %>theme/<%= theme %>/bower.json'
-                ],
                 pluginsPath: '<%= sourcedir %>/plugins.js',
                 pluginsModule: 'plugins',
                 pluginsFilter: function(filepath) {
