@@ -1,7 +1,12 @@
 module.exports = function(grunt) {
     var helpers = require('./grunt/helpers')(grunt);
 
-    require('time-grunt')(grunt);
+    try {
+        require('time-grunt')(grunt);
+    } catch (err) {
+
+    }
+    
     require('load-grunt-config')(grunt, {
         data: helpers.generateConfigData(),
         configPath: __dirname + '/grunt/config',
