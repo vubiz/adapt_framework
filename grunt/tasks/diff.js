@@ -12,6 +12,7 @@ module.exports = function(grunt) {
         'tracking-insert',
         'newer:javascript:dev',
         'newer:less:dev',
+        'datamanifest',
         'replace'
         'scripts:adaptpostbuild'
     ]);

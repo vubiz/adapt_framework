@@ -11,6 +11,7 @@ module.exports = function(grunt) {
             'less:' + requireMode,
             'handlebars',
             'javascript:' + requireMode,
+            'datamanifest',
             'replace',
             'scripts:adaptpostbuild'
         ]);
