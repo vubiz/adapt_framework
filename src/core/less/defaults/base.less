@@ -1,0 +1,34 @@
+html {
+  box-sizing: border-box;
+
+  @media (max-width: @device-width-medium) {
+    font-size: 87.5%;
+  }
+}
+
+*,
+*:before,
+*:after {
+  box-sizing: inherit;
+}
+
+// Override
+img,
+object,
+embed {
+    max-width: 100%;
+}
+
+// Override
+img {
+  display: block;
+}
+
+
+
+
+
+// Add top padding equal to height of navigation bar
+#wrapper {
+  padding-top: @icon-size + (@navigation-padding * 2);
+}
