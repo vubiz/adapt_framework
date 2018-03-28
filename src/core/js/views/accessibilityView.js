@@ -1,56 +1,56 @@
 define([
-    'core/js/adapt'
+  'core/js/adapt'
 ], function(Adapt) {
 
-    var AccessibilityView = Backbone.View.extend({
+  var AccessibilityView = Backbone.View.extend({
 
-        el: '#accessibility-toggle',
+    el: '#accessibility-toggle',
 
-        initialize: function() {
-            this.render();
-        },
+    initialize: function() {
+      this.render();
+    },
 
-        events: {
-            'click' : 'toggleAccessibility'
-        },
+    events: {
+      'click' : 'toggleAccessibility'
+    },
 
-        render: function() {
-            var hasAccessibility = Adapt.config.has('_accessibility')
-                && Adapt.config.get('_accessibility')._isEnabled;
+    render: function() {
+      var hasAccessibility = Adapt.config.has('_accessibility')
+        && Adapt.config.get('_accessibility')._isEnabled;
 
-            if (!hasAccessibility) {
-                return;
-            } else {
-                var isActive = Adapt.config.get('_accessibility')._isActive;
-                var offLabel = Adapt.course.get('_globals') && (Adapt.course.get('_globals')._accessibility.accessibilityToggleTextOff || Adapt.course.get('_globals')._accessibility._accessibilityToggleTextOff);
-                var onLabel = Adapt.course.get('_globals') && (Adapt.course.get('_globals')._accessibility.accessibilityToggleTextOn || Adapt.course.get('_globals')._accessibility._accessibilityToggleTextOn);
+      if (!hasAccessibility) {
+        return;
+      } else {
+        var isActive = Adapt.config.get('_accessibility')._isActive;
+        var offLabel = Adapt.course.get('_globals') && (Adapt.course.get('_globals')._accessibility.accessibilityToggleTextOff || Adapt.course.get('_globals')._accessibility._accessibilityToggleTextOff);
+        var onLabel = Adapt.course.get('_globals') && (Adapt.course.get('_globals')._accessibility.accessibilityToggleTextOn || Adapt.course.get('_globals')._accessibility._accessibilityToggleTextOn);
 
-                var toggleText = isActive ? offLabel : onLabel;
+        var toggleText = isActive ? offLabel : onLabel;
 
-                this.$el.attr('aria-label', Adapt.course.get("title") + ". "
-                    + Adapt.course.get('_globals')._accessibility._ariaLabels.accessibilityToggleButton + ". "
-                    + $.a11y_normalize(toggleText));
-            }
-        },
+        this.$el.attr('aria-label', Adapt.course.get("title") + ". "
+          + Adapt.course.get('_globals')._accessibility._ariaLabels.accessibilityToggleButton + ". "
+          + $.a11y_normalize(toggleText));
+      }
+    },
 
-        toggleAccessibility: function(event) {
-            event.preventDefault();
+    toggleAccessibility: function(event) {
+      event.preventDefault();
 
-            var hasAccessibility = Adapt.config.get('_accessibility')._isActive;
+      var hasAccessibility = Adapt.config.get('_accessibility')._isActive;
 
-            var toggleAccessibility = (hasAccessibility) ? false : true;
+      var toggleAccessibility = (hasAccessibility) ? false : true;
 
-            Adapt.config.get('_accessibility')._isActive = toggleAccessibility;
+      Adapt.config.get('_accessibility')._isActive = toggleAccessibility;
 
-            Adapt.trigger('accessibility:toggle');
+      Adapt.trigger('accessibility:toggle');
 
-            this.render();
+      this.render();
 
-            Backbone.history.navigate(window.location.hash || "#/", {trigger: true});
-        }
+      Backbone.history.navigate(window.location.hash || "#/", {trigger: true});
+    }
 
-    });
+  });
 
-    return AccessibilityView;
+  return AccessibilityView;
 
 });
