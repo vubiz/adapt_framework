@@ -173,9 +173,9 @@ define([
             }
             this.$el.addClass('display-none');
         },
-        
+
         onIsCompleteChange:function(model, isComplete){
-            this.$el.toggleClass('completed', isComplete);
+            this.$el.toggleClass('component--completed', isComplete);
         }
     });
 
