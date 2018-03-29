@@ -1,9 +1,33 @@
 .notify {
-  &-popup {
+  &__popup {
     position: fixed;
     top: 50%;
     width: 100%;
     z-index: 100;
+  }
+
+  &__popup-icon {
+    position: absolute;
+    top: 0;
+    left: 0;
+
+    .dir-rtl & {
+      left: inherit;
+      right: 0;
+    }
+  }
+
+  &__popup-content {
+    .l-container-responsive(@device-width-large);
+    .l-container-padding(4em, 1em);
+  }
+
+  &__popup-content-inner {
+    position: relative;
+  }
+
+  &__popup-done {
+    display: inline-block;
   }
 
   &__shadow {
@@ -21,43 +45,3 @@
     }
   }
 }
-
-// // Notify styling
-// // ==============
-
-// .notify {
-
-//     .notify-popup-icon {
-//         position: absolute;
-//         left: 0px;
-//         .dir-rtl & {
-//             left:inherit;
-//             right:0px;
-//         }
-//         top: 0px;
-//         .icon {
-//             @media all and (max-width:(@device-width-medium - 1px)) {
-//                 float:none;
-//                 margin: 0 auto;
-//             }
-//         }
-//         @media all and (max-width:(@device-width-medium - 1px)) {
-//             float:none;
-//             margin: 0px auto;
-//             position:static;
-//         }
-//     }
-
-//     .notify-popup-content {
-//         .responsive-layout
-//     }
-
-//     .notify-popup-content-inner {
-//         position:relative;
-//     }
-
-//     .notify-popup-done {
-//         display:inline-block;
-//     }
-
-// }
