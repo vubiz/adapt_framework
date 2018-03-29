@@ -1,21 +1,21 @@
-<div class="buttons__inner">
+<div class="btns__inner">
 
-  <div class="buttons__cluster clearfix">
+  <div class="btns__cluster clearfix">
 
     {{#unless _shouldDisplayAttempts}}
-    <div class="buttons__marking-icon icon u-display-none"></div>
+    <div class="btns__marking-icon icon u-display-none"></div>
     {{/unless}}
 
-    <button class="btn-text buttons__action js-buttons-action" aria-label="{{_buttons._submit.ariaLabel}}">{{{_buttons._submit.buttonText}}}</button>
-    <button class="btn-text buttons__feedback js-buttons-feedback" aria-label="{{_buttons._showFeedback.ariaLabel}}" disabled="true">{{{_buttons._showFeedback.buttonText}}}</button>
+    <button class="btn-text btns__action js-btns-action" aria-label="{{_buttons._submit.ariaLabel}}">{{{_buttons._submit.buttonText}}}</button>
+    <button class="btn-text btns__feedback js-btns-feedback" aria-label="{{_buttons._showFeedback.ariaLabel}}" disabled="true">{{{_buttons._showFeedback.buttonText}}}</button>
 
   </div>
 
   {{#if _shouldDisplayAttempts}}
-  <div class="buttons__display">
+  <div class="btns__display">
 
-    <div class="buttons__marking-icon icon u-display-none"></div>
-    <div class="buttons__display-inner" aria-live="assertive"></div>
+    <div class="btns__marking-icon icon u-display-none"></div>
+    <div class="btns__display-inner" aria-live="assertive"></div>
 
   </div>
   {{/if}}

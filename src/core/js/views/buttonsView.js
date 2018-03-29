@@ -27,8 +27,8 @@ define([
     },
 
     events: {
-      'click .js-buttons-action': 'onActionClicked',
-      'click .js-buttons-feedback': 'onFeedbackClicked'
+      'click .js-btns-action': 'onActionClicked',
+      'click .js-btns-feedback': 'onFeedbackClicked'
     },
 
     render: function() {
@@ -50,13 +50,13 @@ define([
 
       if (!isSubmitted) {
 
-        var $icon = this.$('.buttons__marking-icon');
+        var $icon = this.$('.btns__marking-icon');
         $icon.removeClass('icon-cross');
         $icon.removeClass('icon-tick');
         $icon.addClass('u-display-none');
         this.$el.removeClass("is-submitted");
         this.model.set('feedbackMessage', undefined);
-        this.$('.js-buttons-feedback').a11y_cntrl_enabled(false);
+        this.$('.js-btns-feedback').a11y_cntrl_enabled(false);
 
       } else {
 
@@ -78,10 +78,10 @@ define([
     onFeedbackMessageChanged: function(model, changedAttribute) {
       if (changedAttribute && this.model.get('_canShowFeedback')) {
         //enable feedback button
-        this.$('.buttons__feedback').a11y_cntrl_enabled(true);
+        this.$('.btns__feedback').a11y_cntrl_enabled(true);
       } else {
         //disable feedback button
-        this.$('.buttons__feedback').a11y_cntrl_enabled(false);
+        this.$('.btns__feedback').a11y_cntrl_enabled(false);
       }
     },
 
@@ -90,7 +90,7 @@ define([
       var buttonState = BUTTON_STATE(changedAttribute);
       if (changedAttribute === BUTTON_STATE.CORRECT || changedAttribute === BUTTON_STATE.INCORRECT) {
         // Both 'correct' and 'incorrect' states have no model answer, so disable the submit button
-        this.$('.buttons__action').a11y_cntrl_enabled(false);
+        this.$('.btns__action').a11y_cntrl_enabled(false);
 
         if (!this.model.get("_canShowFeedback")) {
           if (!this.$el.is(".no-state")) {
@@ -108,14 +108,14 @@ define([
         var buttonText = this.model.get('_buttons')["_" + propertyName].buttonText;
 
         // Enable the button, make accessible and update aria labels and text
-        this.$('.buttons__action').a11y_cntrl_enabled(true).html(buttonText).attr('aria-label', ariaLabel);
+        this.$('.btns__action').a11y_cntrl_enabled(true).html(buttonText).attr('aria-label', ariaLabel);
 
         // Make model answer button inaccessible (but still enabled) for visual users due to
         // the inability to represent selected incorrect/correct answers to a screen reader, may need revisiting
         switch (changedAttribute) {
           case BUTTON_STATE.SHOW_CORRECT_ANSWER:
           case BUTTON_STATE.HIDE_CORRECT_ANSWER:
-            this.$('.buttons__action').a11y_cntrl(false);
+            this.$('.btns__action').a11y_cntrl(false);
         }
 
       }
@@ -126,9 +126,9 @@ define([
     checkFeedbackState: function(){
       var canShowFeedback = this.model.get('_canShowFeedback');
 
-      this.$('.buttons__action').toggleClass('buttons__action-fullwidth buttons-action-enlarge', !canShowFeedback);
-      this.$('.buttons__feedback').toggleClass('no-feedback', !canShowFeedback);
-      this.$('.buttons__marking-icon').toggleClass('no-feedback', !canShowFeedback);
+      this.$('.btns__action').toggleClass('btns__action-fullwidth btns__action-enlarge', !canShowFeedback);
+      this.$('.btns__feedback').toggleClass('no-feedback', !canShowFeedback);
+      this.$('.btns__marking-icon').toggleClass('no-feedback', !canShowFeedback);
     },
 
     updateAttemptsCount: function(model, changedAttribute) {
@@ -149,12 +149,12 @@ define([
         }
 
       } else {
-        this.$('.buttons__display-inner').addClass('u-visibility-hidden');
+        this.$('.btns__display-inner').addClass('u-visibility-hidden');
         this.showMarking();
       }
 
       if (shouldDisplayAttempts) {
-        this.$('.buttons__display-inner').a11y_text(attemptsString);
+        this.$('.btns__display-inner').a11y_text(attemptsString);
       }
 
     },
@@ -162,7 +162,7 @@ define([
     showMarking: function() {
       if (!this.model.get('_canShowMarking')) return;
 
-      this.$('.buttons__marking-icon')
+      this.$('.btns__marking-icon')
         .removeClass('u-display-none')
         .addClass(this.model.get('_isCorrect') ? 'icon-tick' : 'icon-cross');
     },
