@@ -27,8 +27,8 @@ define([
         },
 
         events: {
-            'click .buttons-action': 'onActionClicked',
-            'click .buttons-feedback': 'onFeedbackClicked'
+            'click .js-buttons-action': 'onActionClicked',
+            'click .js-buttons-feedback': 'onFeedbackClicked'
         },
 
         render: function() {
@@ -50,17 +50,17 @@ define([
 
             if (!isSubmitted) {
 
-                var $icon = this.$('.buttons-marking-icon');
+                var $icon = this.$('.buttons__marking-icon');
                 $icon.removeClass('icon-cross');
                 $icon.removeClass('icon-tick');
-                $icon.addClass('display-none');
-                this.$el.removeClass("submitted");
+                $icon.addClass('u-display-none');
+                this.$el.removeClass("is-submitted");
                 this.model.set('feedbackMessage', undefined);
-                this.$('.buttons-feedback').a11y_cntrl_enabled(false);
+                this.$('.js-buttons-feedback').a11y_cntrl_enabled(false);
 
             } else {
 
-                this.$el.addClass("submitted");
+                this.$el.addClass("is-submitted");
 
             }
         },
@@ -78,10 +78,10 @@ define([
         onFeedbackMessageChanged: function(model, changedAttribute) {
             if (changedAttribute && this.model.get('_canShowFeedback')) {
                 //enable feedback button
-                this.$('.buttons-feedback').a11y_cntrl_enabled(true);
+                this.$('.buttons__feedback').a11y_cntrl_enabled(true);
             } else {
                 //disable feedback button
-                this.$('.buttons-feedback').a11y_cntrl_enabled(false);
+                this.$('.buttons__feedback').a11y_cntrl_enabled(false);
             }
         },
 
@@ -90,7 +90,7 @@ define([
             var buttonState = BUTTON_STATE(changedAttribute);
             if (changedAttribute === BUTTON_STATE.CORRECT || changedAttribute === BUTTON_STATE.INCORRECT) {
                 // Both 'correct' and 'incorrect' states have no model answer, so disable the submit button
-                this.$('.buttons-action').a11y_cntrl_enabled(false);
+                this.$('.buttons__action').a11y_cntrl_enabled(false);
 
                 if (!this.model.get("_canShowFeedback")) {
                     if (!this.$el.is(".no-state")) {
@@ -100,7 +100,7 @@ define([
                         }, this));
                     }
                 }
-              
+
             } else {
 
                 var propertyName = textPropertyName[buttonState.asString];
@@ -108,14 +108,14 @@ define([
                 var buttonText = this.model.get('_buttons')["_" + propertyName].buttonText;
 
                 // Enable the button, make accessible and update aria labels and text
-                this.$('.buttons-action').a11y_cntrl_enabled(true).html(buttonText).attr('aria-label', ariaLabel);
+                this.$('.buttons__action').a11y_cntrl_enabled(true).html(buttonText).attr('aria-label', ariaLabel);
 
                 // Make model answer button inaccessible (but still enabled) for visual users due to
                 // the inability to represent selected incorrect/correct answers to a screen reader, may need revisiting
                 switch (changedAttribute) {
                     case BUTTON_STATE.SHOW_CORRECT_ANSWER:
                     case BUTTON_STATE.HIDE_CORRECT_ANSWER:
-                        this.$('.buttons-action').a11y_cntrl(false);
+                        this.$('.buttons__action').a11y_cntrl(false);
                 }
 
             }
@@ -126,9 +126,9 @@ define([
         checkFeedbackState: function(){
             var canShowFeedback = this.model.get('_canShowFeedback');
 
-            this.$('.buttons-action').toggleClass('buttons-action-fullwidth buttons-action-enlarge', !canShowFeedback);
-            this.$('.buttons-feedback').toggleClass('no-feedback', !canShowFeedback);
-            this.$('.buttons-marking-icon').toggleClass('no-feedback', !canShowFeedback);
+            this.$('.buttons__action').toggleClass('buttons__action-fullwidth buttons-action-enlarge', !canShowFeedback);
+            this.$('.buttons__feedback').toggleClass('no-feedback', !canShowFeedback);
+            this.$('.buttons__marking-icon').toggleClass('no-feedback', !canShowFeedback);
         },
 
         updateAttemptsCount: function(model, changedAttribute) {
@@ -149,12 +149,12 @@ define([
                 }
 
             } else {
-                this.$('.buttons-display-inner').addClass('visibility-hidden');
+                this.$('.buttons__display-inner').addClass('u-visibility-hidden');
                 this.showMarking();
             }
 
             if (shouldDisplayAttempts) {
-                this.$('.buttons-display-inner').a11y_text(attemptsString);
+                this.$('.buttons__display-inner').a11y_text(attemptsString);
             }
 
         },
@@ -162,8 +162,8 @@ define([
         showMarking: function() {
             if (!this.model.get('_canShowMarking')) return;
 
-            this.$('.buttons-marking-icon')
-                .removeClass('display-none')
+            this.$('.buttons__marking-icon')
+                .removeClass('u-display-none')
                 .addClass(this.model.get('_isCorrect') ? 'icon-tick' : 'icon-cross');
         },
 
