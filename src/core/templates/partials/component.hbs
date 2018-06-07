@@ -1,6 +1,5 @@
 {{!-- Allows this template access to '_globals' object in course.json --}}
 {{import_globals}}
-
 {{#any displayTitle body instruction}}
 <div class="component__header {{_component}}__header">
   <div class="component__header-inner {{_component}}__header-inner">
@@ -21,7 +20,7 @@
     </div>
     {{/if}}
 
-    {{#if instruction}}
+    {{#any instruction mobileInstruction}}
     <div class="component__instruction {{_component}}__instruction">
       <div class="component__instruction-inner {{_component}}__instruction-inner">
         {{{compile_a11y_text instruction this}}}
