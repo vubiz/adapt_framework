@@ -7,41 +7,41 @@
 
   <div class="notify__popup-inner">
 
-    <div class="notify__popup-content">
-      <div class="notify__popup-content-inner">
+    <div class="notify__content">
+      <div class="notify__content-inner">
 
-        <div class="notify__popup-icon">
+        <div class="notify__icon">
           <div class="icon{{#if_value_equals _type "prompt"}} icon-question{{/if_value_equals}}{{#if_value_equals _type "alert"}} icon-warning{{/if_value_equals}}"></div>
         </div>
 
         {{#if title}}
-          <div class="notify__popup-title">
-            <div class="notify__popup-title-inner" tabindex="0" role="heading" aria-level="1">
+          <div class="notify__title">
+            <div class="notify__title-inner" tabindex="0" role="heading" aria-level="1">
               {{{compile title this}}}
             </div>
           </div>
         {{/if}}
 
         {{#if body}}
-        <div class="notify__popup-body">
-          <div class="notify__popup-body-inner">
+        <div class="notify__body">
+          <div class="notify__body-inner">
             {{{compile_a11y_text body this}}}
           </div>
         </div>
         {{/if}}
 
         {{#if_value_equals _type "alert"}}
-        <div class="notify__popup-btn-container">
-          <button class="btn-text notify__popup-btn notify__popup-btn-alert js-notify-popup-btn-alert" aria-label="{{{confirmText}}}">{{{confirmText}}}</button>
+        <div class="notify__btn-container">
+          <button class="btn-text notify__btn notify__btn-alert js-notify-btn-alert" aria-label="{{{confirmText}}}">{{{confirmText}}}</button>
         </div>
         {{/if_value_equals}}
 
         {{#if_value_equals _type "prompt"}}
-        <div class="notify__popup-btn-container">
+        <div class="notify__btn-container">
           {{#each _prompts}}
-            <button class="btn-text notify__popup-btn notify__popup-btn-prompt js-notify-popup-btn-prompt" data-event="{{_callbackEvent}}" aria-label="{{{promptText}}}">
-              {{{promptText}}}
-            </button>
+          <button class="btn-text notify__btn notify__btn-prompt js-notify-btn-prompt" data-event="{{_callbackEvent}}" aria-label="{{{promptText}}}">
+            {{{promptText}}}
+          </button>
           {{/each}}
         </div>
         {{/if_value_equals}}
@@ -51,7 +51,7 @@
 
     {{#if _isCancellable}}
     {{#if_value_equals _type "popup"}}
-    <button class="btn-icon notify__popup-close-btn js-notify-popup-close-btn" aria-label="{{_globals._accessibility._ariaLabels.closePopup}}">
+    <button class="btn-icon notify__close-btn js-notify-close-btn" aria-label="{{_globals._accessibility._ariaLabels.closePopup}}">
       <div class="icon"></div>
     </button>
     {{/if_value_equals}}

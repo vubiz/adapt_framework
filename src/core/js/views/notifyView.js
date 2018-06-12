@@ -62,9 +62,9 @@ define([
         },
 
         events: {
-            'click .js-notify-popup-btn-alert':'onAlertButtonClicked',
-            'click .js-notify-popup-btn-prompt': 'onPromptButtonClicked',
-            'click .js-notify-popup-close-btn': 'onCloseButtonClicked',
+            'click .js-notify-btn-alert':'onAlertButtonClicked',
+            'click .js-notify-btn-prompt': 'onPromptButtonClicked',
+            'click .js-notify-close-btn': 'onCloseButtonClicked',
             'click .js-notify-shadow-click': 'onShadowClicked'
         },
 
@@ -195,7 +195,7 @@ define([
             this.subView = this.model.get("_view");
             if (!this.subView) return;
 
-            this.$(".notify__popup-content-inner").append(this.subView.$el);
+            this.$(".notify__content-inner").append(this.subView.$el);
 
         },
 
