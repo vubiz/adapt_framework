@@ -31,7 +31,7 @@ define([
       // do not perform if component has .not-accessible class
       if (this.$el.is(".not-accessible")) return;
       // do not perform if component has .no-state class
-      if (this.$el.is(".no-state")) return;
+      if (this.$el.is(".has-no-state")) return;
 
       var $previousState = this.$(".accessibility-state");
       var isStateRendered = $previousState.length;
