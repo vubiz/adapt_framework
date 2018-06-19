@@ -4,9 +4,12 @@
 // 47.5em = 760px
 // 32.5em = 520px
 
-@device-width-large: unit(@adapt-device-large, em);
-@device-width-medium: unit(@adapt-device-medium, em);
-@device-width-small: unit(@adapt-device-small, em);
+@device-width-large: unit(@adapt-device-large, px);
+@device-width-medium: unit(@adapt-device-medium, px);
+@device-width-small: unit(@adapt-device-small, px);
+
+// Set up to support a globally html assigned font size
+// @global-font-size: unit(@adapt-font-size, em);
 
 //
 @max-width: 87.5em;
@@ -35,3 +38,7 @@
 @background-color-inverted: @white;
 
 
+
+
+
+@focus-outline: 3px solid orange;
