@@ -151,7 +151,7 @@ define([
     },
 
     setVisibility: function() {
-      var visible = "visibility-hidden";
+      var visible = "u-visibility-hidden";
       if (this.model.get('_isVisible')) {
         visible = "";
       }
@@ -160,24 +160,24 @@ define([
 
     toggleVisibility: function() {
       if (this.model.get('_isVisible')) {
-        return this.$el.removeClass('visibility-hidden');
+        return this.$el.removeClass('u-visibility-hidden');
       }
-      this.$el.addClass('visibility-hidden');
+      this.$el.addClass('u-visibility-hidden');
     },
 
     setHidden: function() {
       var hidden = "";
       if (this.model.get('_isHidden')) {
-        hidden = "display-none";
+        hidden = "u-display-none";
       }
       return hidden;
     },
 
     toggleHidden: function() {
       if (!this.model.get('_isHidden')) {
-        return this.$el.removeClass('display-none');
+        return this.$el.removeClass('u-display-none');
       }
-      this.$el.addClass('display-none');
+      this.$el.addClass('u-display-none');
     },
 
     onIsCompleteChange:function(model, isComplete){
