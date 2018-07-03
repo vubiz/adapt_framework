@@ -56,14 +56,14 @@ define([
 
     hideNavigationButton: function(model) {
       if (model.get('_type') === "course") {
-        $('.navigation-back-button, .navigation-home-button').addClass('display-none');
+        $('.navigation-back-button, .navigation-home-button').addClass('u-display-none');
       } else {
         this.showNavigationButton();
       }
     },
 
     showNavigationButton: function() {
-      $('.nav__back-btn, .nav-home-button').removeClass('display-none');
+      $('.nav__back-btn, .nav-home-button').removeClass('u-display-none');
     },
 
     setupA11yButton: function() {

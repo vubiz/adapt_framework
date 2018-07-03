@@ -11,15 +11,14 @@ define([
   var QuestionView = ComponentView.extend({
 
     className: function() {
-      return "component "
-      + "question-component "
-      + this.model.get('_component')
-      + "-component " + this.model.get('_id')
-      + " " + this.model.get('_classes')
-      + " " + this.setVisibility()
-      + " component-" + this.model.get('_layout')
-      + " nth-child-" + this.model.get("_nthChild")
-      + (this.model.get('_isComplete') ? ' completed' : '');
+      return "component is-question m-" +
+      this.model.get('_component') +
+      " " + this.model.get('_id') +
+      " " + this.model.get('_classes') +
+      " " + this.setVisibility() +
+      " is-" + this.model.get('_layout') +
+      " is-nth-child-" + this.model.get("_nthChild") +
+      " " + (this.model.get('_isComplete') ? 'is-complete' : '');
     },
 
     //////
@@ -46,10 +45,10 @@ define([
       // If isEnabled == false add disabled class
       // else remove disabled class
       if (!changedAttribute) {
-        this.$('.component-widget').addClass('disabled');
+        this.$('.component__widget').addClass('is-disabled');
         this.disableQuestion();
       } else {
-        this.$('.component-widget').removeClass('disabled');
+        this.$('.component__widget').removeClass('is-disabled');
         this.enableQuestion();
       }
 
@@ -211,7 +210,7 @@ define([
 
     // Adds a validation error class when the canSubmit returns false
     showInstructionError: function() {
-      this.$(".component-instruction-inner").addClass("validation-error");
+      this.$(".component__instruction-inner").addClass("validation-error");
       this.$el.a11y_focus();
     },
 
@@ -225,12 +224,12 @@ define([
     // Also adds a 'submitted' class to the widget
     setQuestionAsSubmitted: function() {
       this.model.setQuestionAsSubmitted();
-      this.$(".component-widget").addClass("submitted");
+      this.$(".component__widget").addClass("is-submitted");
     },
 
     // Removes validation error class when the user canSubmit
     removeInstructionError: function() {
-      this.$(".component-instruction-inner").removeClass("validation-error");
+      this.$(".component__instruction-inner").removeClass("validation-error");
     },
 
     // This is important and should give the user feedback on how they answered the question
@@ -244,7 +243,7 @@ define([
       var isComplete = this.model.checkQuestionCompletion();
 
       if (isComplete) {
-        this.$('.component-widget').addClass('complete show-user-answer');
+        this.$('.component__widget').addClass('is-complete show-user-answer');
       }
 
     },
@@ -285,7 +284,7 @@ define([
 
     setQuestionAsReset: function() {
       this.model.setQuestionAsReset();
-      this.$(".component-widget").removeClass("submitted");
+      this.$(".component__widget").removeClass("is-submitted");
 
       // Attempt to get the current page location
       var currentModel = Adapt.findById(Adapt.location._currentId);
@@ -325,8 +324,8 @@ define([
     },
 
     setQuestionAsShowCorrect: function() {
-      this.$(".component-widget")
-        .addClass("submitted show-correct-answer")
+      this.$(".component__widget")
+        .addClass("is-submitted show-correct-answer")
         .removeClass("show-user-answer");
     },
 
@@ -342,8 +341,8 @@ define([
     },
 
     setQuestionAsHideCorrect: function() {
-      this.$(".component-widget")
-        .addClass("submitted show-user-answer")
+      this.$(".component__widget")
+        .addClass("is-submitted show-user-answer")
         .removeClass("show-correct-answer");
     },
 

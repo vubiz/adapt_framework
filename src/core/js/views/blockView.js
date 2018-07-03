@@ -10,8 +10,8 @@ define([
       " " + this.model.get('_classes') +
       " " + this.setVisibility() +
       " " + this.setHidden() +
-      " block--nth-child-" + this.model.get("_nthChild") +
-      " " + (this.model.get('_isComplete') ? 'block--completed' : '');
+      " is-nth-child-" + this.model.get("_nthChild") +
+      " " + (this.model.get('_isComplete') ? 'is-complete' : '');
     }
 
   }, {

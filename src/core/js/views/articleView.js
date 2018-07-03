@@ -11,8 +11,8 @@ define([
       " " + this.model.get('_classes') +
       " " + this.setVisibility() +
       " " + this.setHidden() +
-      " article--nth-child-" + this.model.get("_nthChild") +
-      " " + (this.model.get('_isComplete') ? 'article--completed' : '');
+      " is-nth-child-" + this.model.get("_nthChild") +
+      " " + (this.model.get('_isComplete') ? 'is-complete' : '');
     }
 
   }, {

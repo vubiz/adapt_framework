@@ -181,7 +181,7 @@ define([
     },
 
     onIsCompleteChange:function(model, isComplete){
-      this.$el.toggleClass('component--completed', isComplete);
+      this.$el.toggleClass('is-complete', isComplete);
     }
 
   });

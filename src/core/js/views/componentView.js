@@ -12,9 +12,9 @@ define([
       " " + this.model.get('_classes') +
       " " + this.setVisibility() +
       " " + this.setHidden() +
-      " component--" + this.model.get('_layout') +
-      " component--nth-child-" + this.model.get("_nthChild") +
-      " " + (this.model.get('_isComplete') ? 'component--completed' : '');
+      " is-" + this.model.get('_layout') +
+      " is-nth-child-" + this.model.get("_nthChild") +
+      " " + (this.model.get('_isComplete') ? 'is-complete' : '');
     },
 
     initialize: function(){
