@@ -36,7 +36,7 @@ define([
         Adapt.device.screenSize = checkScreenSize();
 
         $html.addClass('size-' + Adapt.device.screenSize);
-        
+
         if (Adapt.device.orientation) {
             $html.addClass('orientation-' + Adapt.device.orientation);
         }
@@ -47,16 +47,18 @@ define([
 
     /**
      * Compares the calculated screen width to the breakpoints defined in config.json.
-     * 
+     *
      * @returns {string} 'large', 'medium' or 'small'
      */
     function checkScreenSize() {
         var screenSizeConfig = Adapt.config.get('screenSize');
         var screenSize;
 
-        if (Adapt.device.screenWidth > screenSizeConfig.medium) {
+        var fontSize = parseFloat($('body').css('font-size'));
+
+        if ((Adapt.device.screenWidth / fontSize) > screenSizeConfig.medium) {
             screenSize = 'large';
-        } else if (Adapt.device.screenWidth > screenSizeConfig.small) {
+        } else if ((Adapt.device.screenWidth / fontSize) > screenSizeConfig.small) {
             screenSize = 'medium';
         } else {
             screenSize = 'small';

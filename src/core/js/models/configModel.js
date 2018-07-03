@@ -6,9 +6,9 @@ define([
 
     defaults: {
       screenSize: {
-        large: 900,
-        medium: 760,
-        small: 520
+        large: 56.25,
+        medium: 47.5,
+        small: 32.5
       },
       _forceRouteLocking: false,
       _canLoadData: true,
@@ -30,11 +30,6 @@ define([
 
             if (this.get('_canLoadData')) {
               Adapt.trigger('configModel:loadCourseData');
-            }
-
-            if (this.get('_defaultDirection') === 'rtl'){
-              // We're going to use rtl style
-              $('html').addClass('dir-rtl');
             }
 
             // Check if animations should be disabled
