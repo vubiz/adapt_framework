@@ -40,9 +40,7 @@ require([
             Adapt.articles.models.length > 0 &&
             Adapt.blocks.models.length > 0 &&
             Adapt.components.models.length > 0 &&
-            Adapt.course.get('_id')) {
-
-            configureInview();
+            Adapt.course.get('_id')) { 
 
             mapAdaptIdsToObjects();
 
@@ -252,7 +250,7 @@ require([
     }
 
     function onBuildDataLoaded() {
-
+        $('html').attr("data-adapt-framework-version", Adapt.build.get('package').version);  
         Adapt.config = new ConfigModel(null, {url: "course/config."+Adapt.build.get("jsonext"), reset:true});
         Adapt.config.on({
             'change:_activeLanguage': onLanguageChange,
