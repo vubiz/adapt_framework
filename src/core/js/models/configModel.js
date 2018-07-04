@@ -32,16 +32,6 @@ define([
               Adapt.trigger('configModel:loadCourseData');
             }
 
-            // Check if animations should be disabled
-            var disableAnimationArray = this.get('_disableAnimationFor');
-            if (disableAnimationArray && disableAnimationArray.length > 0) {
-              for (var i = 0; i < disableAnimationArray.length; i++) {
-                if ($("html").is(disableAnimationArray[i])) {
-                  this.set('_disableAnimation', true);
-                  console.log('Animation disabled.');
-                }
-              }
-            }
           }.bind(this));
         }.bind(this),
         error: function() {
