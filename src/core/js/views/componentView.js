@@ -7,7 +7,7 @@ define([
 
     className: function() {
       return "component m-" +
-      this.model.get('_component') +
+      this.model.get('_component').toLowerCase() +
       " " + this.model.get('_id') +
       " " + this.model.get('_classes') +
       " " + this.setVisibility() +

@@ -1,9 +1,3 @@
-// Rework this?
-button {
-  border: 0;
-  padding: 0;
-}
-
 .btn {
   &-icon {
     padding: @icon-padding;
@@ -11,30 +5,39 @@ button {
   }
 
   &-text {
+    padding: 0.5em 1.5em;
     // min-height: 3em; // should value be double button text line height?
     // padding: 0 2em;
   }
 }
 
-// question component buttons
-.buttons {
+// --------------------------------------------------
+// Question component buttons
+// --------------------------------------------------
+.btn {
   .btn-text {
-    width: 49.5%;
-    .u-float-left;
-
-    .dir-rtl & {
-      .u-float-right;
-    }
+    // width: 49.5%;
+    // .u-float-left;
   }
 }
 
 .btn {
+  &__container {
+  }
+
+  &__response-container {
+    display: flex;
+    position: relative;
+  }
+
   &__action {
-    margin-right: 0.5%;
+    // margin-right: 0.5%;
+    width: 50%;
   }
 
   &__feedback {
-    margin-left: 0.5%;
+    // margin-left: 0.5%;
+    width: 50%;
 
     &.no-feedback {
       display: none;
@@ -42,51 +45,36 @@ button {
   }
 
   &__action-fullwidth {
-    width: 100%;
-    margin: 0;
+    // width: 100%;
+    // margin: 0;
   }
 
-  &__container {
-    position: relative;
-  }
-
-  &__marking-icon {
+  &__marking {
     position: absolute;
     left: 50%;
     top: 50%;
-    width: 1.5em;
-    height: 1.5em;
-    margin-top: -0.75em;
-    margin-left: -0.75em;
-    font-size: 1.5em;
-    line-height: 1;
-    text-align: center;
-    border-radius: 50%;
+    .transform(translate(-50%, -50%));
 
     .dir-rtl & {
       left: inherit;
       right: 50%;
-      margin-left: inherit;
-      margin-right: -0.75em;
     }
+  }
 
-    &.validation-success {
+  &__marking.validation-success {
+    .icon {
       .icon-tick;
       background-color: @validation-success;
+      color: @validation-success-inverted;
     }
+  }
 
-    &.validation-error {
+  &__marking.validation-error {
+    .icon {
       .icon-cross;
       background-color: @validation-error;
+      color: @validation-error-inverted;
     }
-  }
-
-  &__display {
-    position: relative;
-  }
-
-  &__display-inner {
-    padding: 1em;
   }
 }
 

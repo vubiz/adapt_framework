@@ -12,7 +12,7 @@ define([
 
     className: function() {
       return "component is-question m-" +
-      this.model.get('_component') +
+      this.model.get('_component').toLowerCase() +
       " " + this.model.get('_id') +
       " " + this.model.get('_classes') +
       " " + this.setVisibility() +
@@ -115,7 +115,7 @@ define([
 
     // Used to setup buttonsView and sets up the internal events for the question
     addButtonsView: function() {
-      this.buttonsView = new ButtonsView({model: this.model, el: this.$('.buttons')});
+      this.buttonsView = new ButtonsView({model: this.model, el: this.$('.btn__container')});
 
       this.listenTo(this.buttonsView, 'buttons:stateUpdate', this.onButtonStateUpdate);
     },

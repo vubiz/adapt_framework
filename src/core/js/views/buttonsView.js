@@ -50,7 +50,7 @@ define([
 
       if (!isSubmitted) {
 
-        var $icon = this.$('.btn__marking-icon');
+        var $icon = this.$('.btn__marking');
         $icon.removeClass('icon-cross');
         $icon.removeClass('icon-tick');
         $icon.addClass('u-display-none');
@@ -128,7 +128,7 @@ define([
 
       this.$('.btn__action').toggleClass('btn__action-fullwidth', !canShowFeedback);
       this.$('.btn__feedback').toggleClass('no-feedback', !canShowFeedback);
-      this.$('.btn__marking-icon').toggleClass('no-feedback', !canShowFeedback);
+      this.$('.btn__marking').toggleClass('no-feedback', !canShowFeedback);
     },
 
     updateAttemptsCount: function(model, changedAttribute) {
@@ -149,12 +149,12 @@ define([
         }
 
       } else {
-        this.$('.btn__display-inner').addClass('u-visibility-hidden');
+        this.$('.js-display-attempts').addClass('u-visibility-hidden');
         this.showMarking();
       }
 
       if (shouldDisplayAttempts) {
-        this.$('.btn__display-inner').a11y_text(attemptsString);
+        this.$('.js-insert-attempts-string').a11y_text(attemptsString);
       }
 
     },
@@ -162,7 +162,7 @@ define([
     showMarking: function() {
       if (!this.model.get('_canShowMarking')) return;
 
-      this.$('.btn__marking-icon')
+      this.$('.btn__marking')
         .removeClass('u-display-none')
         .addClass(this.model.get('_isCorrect') ? 'validation-success' : 'validation-error');
     },
