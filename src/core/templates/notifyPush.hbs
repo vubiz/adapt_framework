@@ -4,17 +4,21 @@
 
   {{{a11y_aria_label _globals._accessibility._ariaLabels.feedbackPopUp}}}
 
+  {{#if title}}
   <div class="notify__push-title">
     <div class="notify__push-title-inner" tabindex="0" role="heading" aria-level="1">
       {{{compile title this}}}
     </div>
   </div>
+  {{/if}}
 
+  {{#if body}}
   <div class="notify__push-body">
     <div class="notify__push-body-inner">
         {{{compile_a11y_text body this}}}
     </div>
   </div>
+  {{/if}}
 
 </div>
 

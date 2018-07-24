@@ -1,7 +1,7 @@
 {{!-- Allows this template access to '_globals' object in course.json --}}
 {{import_globals}}
 
-<div {{#each _attributes}}{{@key}}="{{this}}" {{/each}} class="notify__popup notify__popup-type-{{_type}} {{_classes}}">
+<div {{#each _attributes}}{{@key}}="{{this}}" {{/each}} class="notify__popup notify__popup-type-{{_type}}{{#if _classes}} {{_classes}}{{/if}}">
 
   {{{a11y_aria_label _globals._accessibility._ariaLabels.feedbackPopUp}}}
 

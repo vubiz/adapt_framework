@@ -1,15 +1,19 @@
 <button class="drawer__item-open {{className}}">
 
+  {{#if title}}
   <div class="drawer__item-title">
-    <div class="drawer__item-title-inner h5">
+    <div class="drawer__item-title-inner">
       {{{title}}}
     </div>
   </div>
+  {{/if}}
 
+  {{#if description}}
   <div class="drawer__item-description">
     <div class="drawer__item-description-inner">
       {{{a11y_text description}}}
     </div>
   </div>
+  {{/if}}
 
 </button>
