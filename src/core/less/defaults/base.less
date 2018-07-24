@@ -10,6 +10,7 @@ html {
 *:after {
   box-sizing: inherit;
 }
+// --------------------------------------------------
 
 // --------------------------------------------------
 // Set the following tags to scale to their container size
@@ -17,15 +18,27 @@ html {
 img,
 object,
 embed {
-    max-width: 100%;
+  max-width: 100%;
 }
+// --------------------------------------------------
 
 // --------------------------------------------------
 // Override the default 'inline' display property for images
 // --------------------------------------------------
 img {
   display: block;
+  min-width: 100%;
 }
+// --------------------------------------------------
+
+// --------------------------------------------------
+// Remove the default border and padding from all button tags
+// --------------------------------------------------
+button {
+  border: 0;
+  padding: 0;
+}
+// --------------------------------------------------
 
 // --------------------------------------------------
 // Set the text direction to rtl when enabled
@@ -35,6 +48,7 @@ body {
     direction: rtl;
   }
 }
+// --------------------------------------------------
 
 // --------------------------------------------------
 // Add top padding equal to the height of the navigation bar
@@ -42,3 +56,4 @@ body {
 #wrapper {
   padding-top: @icon-size + (@icon-padding * 2);
 }
+// --------------------------------------------------
