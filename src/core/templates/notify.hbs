@@ -7,7 +7,7 @@
 
   <div class="notify__popup-inner">
 
-    <div class="notify__content">
+    <div class="notify__content{{#if _image}} has-image{{/if}}{{#if feedbackClasses}} {{feedbackClasses}}{{/if}}">
       <div class="notify__content-inner">
 
         <div class="notify__icon">
@@ -29,6 +29,26 @@
           </div>
         </div>
         {{/if}}
+
+        {{#if _image}}
+        <div class="notify__image-container">
+
+          {{#if imageAlt}}
+          <img class="notify__image" src="{{_image}}" aria-label="{{imageAlt}}" tabindex="0">
+          {{else}}
+          <img class="notify__image a11y-ignore" src="{{_image}}" aria-hidden="true" tabindex="-1">
+          {{/if}}
+
+        </div>
+        {{/if}}
+
+        {{!-- {{#if _graphic.attribution}}
+        <div class="notify__attribution">
+          <div class="notify__attribution-inner">
+            {{{_graphic.attribution}}}
+          </div>
+        </div>
+        {{/if}} --}}
 
         {{#if_value_equals _type "alert"}}
         <div class="notify__btn-container">

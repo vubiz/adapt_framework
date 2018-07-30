@@ -215,7 +215,9 @@ define([
 
       this.set({
         feedbackTitle: this.getFeedbackTitle(feedback),
-        feedbackMessage: feedback.correct || ""
+        feedbackMessage: feedback.correct || "",
+        feedbackImage: feedback._correctImage || "",
+        feedbackClasses: this.getFeedbackClasses(feedback)
       });
 
     },
@@ -231,7 +233,9 @@ define([
           if (feedback._partlyCorrect.final) {
             this.set({
               feedbackTitle: this.getFeedbackTitle(feedback),
-              feedbackMessage: feedback._partlyCorrect.final
+              feedbackMessage: feedback._partlyCorrect.final,
+              feedbackImage: feedback._partlyCorrect._finalImage,
+              feedbackClasses: this.getFeedbackClasses(feedback)
             });
           } else {
             this.setupIncorrectFeedback();
@@ -239,7 +243,9 @@ define([
         } else {
           this.set({
             feedbackTitle: this.getFeedbackTitle(feedback),
-            feedbackMessage: feedback._partlyCorrect.notFinal ? feedback._partlyCorrect.notFinal : ""
+            feedbackMessage: feedback._partlyCorrect.notFinal ? feedback._partlyCorrect.notFinal : "",
+            feedbackImage: feedback._partlyCorrect.notFinal ? feedback._partlyCorrect._notFinalImage : "",
+            feedbackClasses: this.getFeedbackClasses(feedback)
           });
         }
       } else {
@@ -255,12 +261,16 @@ define([
       if (this.get('_attemptsLeft') === 0 || feedback && !feedback._incorrect.notFinal) {
         this.set({
           feedbackTitle: this.getFeedbackTitle(feedback),
-          feedbackMessage: feedback ? feedback._incorrect.final : ""
+          feedbackMessage: feedback ? feedback._incorrect.final : "",
+          feedbackImage: feedback ? feedback._incorrect._finalImage : "",
+          feedbackClasses: this.getFeedbackClasses(feedback)
         });
       } else {
         this.set({
           feedbackTitle: this.getFeedbackTitle(feedback),
-          feedbackMessage: feedback ? feedback._incorrect.notFinal : ""
+          feedbackMessage: feedback ? feedback._incorrect.notFinal : "",
+          feedbackImage: feedback ? feedback._incorrect._notFinalImage : "",
+          feedbackClasses: this.getFeedbackClasses(feedback)
         });
       }
 
@@ -268,6 +278,10 @@ define([
 
     getFeedbackTitle: function(feedback) {
       return feedback.title || this.get('displayTitle') ||  this.get('title') || "";
+    },
+
+    getFeedbackClasses: function(feedback) {
+      return feedback._feedbackClasses || "";
     },
 
     // Reset the model to let the user have another go (not the same as attempts)
