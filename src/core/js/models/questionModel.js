@@ -194,6 +194,7 @@ define([
 
     // Used to setup the correct, incorrect and partly correct feedback
     setupFeedback: function() {
+      if (!this.has('_feedback')) return;
 
       if (this.get('_isCorrect')) {
         this.setupCorrectFeedback();
@@ -202,7 +203,6 @@ define([
       } else {
         this.setupIncorrectFeedback();
       }
-
     },
 
     // Used by the question to determine if the question is incorrect or partly correct
@@ -210,78 +210,47 @@ define([
     isPartlyCorrect: function() {},
 
     setupCorrectFeedback: function() {
-
       var feedback = this.get("_feedback");
 
       this.set({
-        feedbackTitle: this.getFeedbackTitle(feedback),
-        feedbackMessage: feedback.correct || "",
-        feedbackImage: feedback._correctImage || "",
-        feedbackClasses: this.getFeedbackClasses(feedback)
+        feedbackTitle: this.getFeedbackTitle(),
+        feedbackMessage: feedback.correct,
+        feedbackImage: feedback._correctImage,
+        feedbackClasses: feedback._classes
       });
 
     },
 
     setupPartlyCorrectFeedback: function() {
+      var feedback = this.get('_feedback')._partlyCorrect;
 
-      var feedback = this.get("_feedback");
-
-      if (!feedback) return;
-
-      if (feedback._partlyCorrect) {
-        if (this.get('_attemptsLeft') === 0 || !feedback._partlyCorrect.notFinal) {
-          if (feedback._partlyCorrect.final) {
-            this.set({
-              feedbackTitle: this.getFeedbackTitle(feedback),
-              feedbackMessage: feedback._partlyCorrect.final,
-              feedbackImage: feedback._partlyCorrect._finalImage,
-              feedbackClasses: this.getFeedbackClasses(feedback)
-            });
-          } else {
-            this.setupIncorrectFeedback();
-          }
-        } else {
-          this.set({
-            feedbackTitle: this.getFeedbackTitle(feedback),
-            feedbackMessage: feedback._partlyCorrect.notFinal ? feedback._partlyCorrect.notFinal : "",
-            feedbackImage: feedback._partlyCorrect.notFinal ? feedback._partlyCorrect._notFinalImage : "",
-            feedbackClasses: this.getFeedbackClasses(feedback)
-          });
-        }
+      if (feedback && feedback.final) {
+        this.setAttemptSpecificFeedback(feedback);
       } else {
         this.setupIncorrectFeedback();
       }
-
     },
 
     setupIncorrectFeedback: function() {
-
-      var feedback = this.get("_feedback");
-
-      if (this.get('_attemptsLeft') === 0 || feedback && !feedback._incorrect.notFinal) {
-        this.set({
-          feedbackTitle: this.getFeedbackTitle(feedback),
-          feedbackMessage: feedback ? feedback._incorrect.final : "",
-          feedbackImage: feedback ? feedback._incorrect._finalImage : "",
-          feedbackClasses: this.getFeedbackClasses(feedback)
-        });
-      } else {
-        this.set({
-          feedbackTitle: this.getFeedbackTitle(feedback),
-          feedbackMessage: feedback ? feedback._incorrect.notFinal : "",
-          feedbackImage: feedback ? feedback._incorrect._notFinalImage : "",
-          feedbackClasses: this.getFeedbackClasses(feedback)
-        });
-      }
-
+      this.setAttemptSpecificFeedback(this.get('_feedback')._incorrect);
     },
 
-    getFeedbackTitle: function(feedback) {
-      return feedback.title || this.get('displayTitle') ||  this.get('title') || "";
+    setAttemptSpecificFeedback: function(feedback) {
+      var hasAttemptsLeft = this.get('_attemptsLeft');
+
+      var body = hasAttemptsLeft && feedback.notFinal || feedback.final;
+      var image = hasAttemptsLeft && feedback._notFinalImage || feedback._finalImage;
+
+      this.set({
+        feedbackTitle: this.getFeedbackTitle(),
+        feedbackMessage: body,
+        feedbackImage: image,
+        feedbackClasses: this.get("_feedback")._classes
+      });
     },
 
-    getFeedbackClasses: function(feedback) {
-      return feedback._feedbackClasses || "";
+    getFeedbackTitle: function() {
+      return this.get('_feedback').title || this.get('displayTitle') ||  this.get('title') || "";
     },
 
     // Reset the model to let the user have another go (not the same as attempts)
