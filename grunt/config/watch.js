@@ -17,11 +17,11 @@ module.exports = {
         tasks: ['handlebars', 'javascript:dev']
     },
     courseJson: {
-        files: ['<%= sourcedir %>course/**/*.<%= jsonext %>'],
+        files: ['<%= coursedir %>/**/*.<%= jsonext %>'],
         tasks : ['jsonlint', 'check-json', 'copy:courseJson', 'schema-defaults', 'create-json-config']
     },
     courseAssets: {
-        files: ['<%= sourcedir %>course/<%=languages%>/*', '!<%= sourcedir %>course/<%=languages%>/*.<%= jsonext %>'],
+        files: ['<%= coursedir %>/<%=languages%>/*', '!<%= coursedir %>/<%=languages%>/*.<%= jsonext %>'],
         tasks : ['copy:courseAssets']
     },
     js: {

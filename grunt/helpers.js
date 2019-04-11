@@ -35,6 +35,7 @@ module.exports = function(grunt) {
         }
 
         grunt.log.ok('Using source at "' + grunt.config('sourcedir') + '"');
+        grunt.log.ok('Using content at "' + grunt.config('coursedir') + '"');
         grunt.log.ok('Building to "' + grunt.config('outputdir') + '"');
         if (grunt.config('theme') !== '**') grunt.log.ok('Using theme "' + grunt.config('theme') + '"');
         if (grunt.config('menu') !== '**') grunt.log.ok('Using menu "' + grunt.config('menu') + '"');
@@ -124,10 +125,12 @@ module.exports = function(grunt) {
     // exported
 
     var exports = {};
+    var coursedir = grunt.option('course') || 'default';
 
     exports.defaults = {
+        coursedir: `courses/${coursedir}/`,
         sourcedir: 'src' + path.sep,
-        outputdir: 'build' + path.sep,
+        outputdir: `builds/${coursedir}/`,
         jsonext: 'json',
         theme: '**',
         menu: '**',
@@ -177,6 +180,7 @@ module.exports = function(grunt) {
     exports.generateConfigData = function() {
 
         var root = __dirname.split(path.sep).slice(0,-1).join(path.sep);
+        var coursedir = appendSlash(grunt.option('coursedir')) || exports.defaults.coursedir;
         var sourcedir = appendSlash(grunt.option('sourcedir')) || exports.defaults.sourcedir;
         var outputdir = appendSlash(grunt.option('outputdir')) || exports.defaults.outputdir;
         var jsonext = grunt.option('jsonext') || exports.defaults.jsonext;
@@ -202,10 +206,11 @@ module.exports = function(grunt) {
         }
 
         var data = {
-            root: root,
-            sourcedir: sourcedir,
-            outputdir: outputdir,
-            jsonext: jsonext,
+            root,
+            coursedir,
+            sourcedir,
+            outputdir,
+            jsonext,
             theme: grunt.option('theme') || exports.defaults.theme,
             menu: grunt.option('menu') || exports.defaults.menu,
             languages: languageFolders || exports.defaults.languages,
