@@ -93,7 +93,7 @@ module.exports = function(grunt) {
     var appendSlash = function(dir) {
         if (dir) {
             var lastChar = dir.substring(dir.length - 1, dir.length);
-            if (lastChar !== path.sep) return dir + path.sep;
+            if (lastChar !== '/') return dir + '/';
         }
     };
 
@@ -125,12 +125,13 @@ module.exports = function(grunt) {
     // exported
 
     var exports = {};
-    var coursedir = grunt.option('course') || 'default';
+    var defaultCourseDir = 'build/course/';
 
     exports.defaults = {
-        coursedir: `courses/${coursedir}/`,
-        sourcedir: 'src' + path.sep,
-        outputdir: `builds/${coursedir}/`,
+        sourcedir: 'src/',
+        coursedir: defaultCourseDir,
+        outputdir: 'build/',
+        outputcoursedir: defaultCourseDir,
         jsonext: 'json',
         theme: '**',
         menu: '**',
@@ -149,10 +150,6 @@ module.exports = function(grunt) {
             'adapt-contrib-spoor'
         ]
     };
-
-    // Convert the directory paths so that they work cross platform
-    exports.defaults.sourcedir = exports.defaults.sourcedir.replace(convertSlashes, "/");
-    exports.defaults.outputdir = exports.defaults.outputdir.replace(convertSlashes, "/");
 
     exports.getIncludes = function(buildIncludes, configData) {
         var dependencies = [];
@@ -183,6 +180,7 @@ module.exports = function(grunt) {
         var coursedir = appendSlash(grunt.option('coursedir')) || exports.defaults.coursedir;
         var sourcedir = appendSlash(grunt.option('sourcedir')) || exports.defaults.sourcedir;
         var outputdir = appendSlash(grunt.option('outputdir')) || exports.defaults.outputdir;
+        var outputcoursedir = appendSlash(grunt.option('outputcoursedir')) || exports.defaults.outputcoursedir;
         var jsonext = grunt.option('jsonext') || exports.defaults.jsonext;
 
         var languageFolders = "";
@@ -210,6 +208,7 @@ module.exports = function(grunt) {
             coursedir,
             sourcedir,
             outputdir,
+            outputcoursedir,
             jsonext,
             theme: grunt.option('theme') || exports.defaults.theme,
             menu: grunt.option('menu') || exports.defaults.menu,
