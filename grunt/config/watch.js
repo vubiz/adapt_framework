@@ -1,4 +1,5 @@
 // TODO excludes
+
 module.exports = {
     bowerJson: {
         files: ['<%= sourcedir %>*/*/bower.json'],
@@ -17,12 +18,16 @@ module.exports = {
         tasks: ['handlebars', 'javascript:dev']
     },
     courseJson: {
-        files: ['<%= coursedir %>/**/*.<%= jsonext %>'],
-        tasks : ['jsonlint', 'check-json', 'copy:courseJson', 'schema-defaults', 'create-json-config']
+        files: ['<%= coursedir %>/**/*.<%= jsonext %>', '!<%= outputcoursedir %>/**/*.<%= jsonext %>'],
+        tasks: ['jsonlint', 'check-json', 'copy:courseJson', 'schema-defaults', 'create-json-config']
     },
     courseAssets: {
-        files: ['<%= coursedir %>/<%=languages%>/*', '!<%= coursedir %>/<%=languages%>/*.<%= jsonext %>'],
-        tasks : ['copy:courseAssets']
+        files: [
+            '<%= coursedir %>/<%=languages%>/*',
+            '!<%= coursedir %>/<%=languages%>/*.<%= jsonext %>',
+            '!<%= outputcoursedir %>/**'
+        ],
+        tasks: ['copy:courseAssets']
     },
     js: {
         files: [
