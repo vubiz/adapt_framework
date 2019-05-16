@@ -182,8 +182,6 @@ module.exports = function(grunt) {
         var outputcoursedir = appendSlash(grunt.option('outputcoursedir')) || `${outputdir}course/`;
         var jsonext = grunt.option('jsonext') || exports.defaults.jsonext;
         
-        console.log(outputcoursedir);
-
         var languageFolders = "";
         if (grunt.option('languages') && grunt.option('languages').split(',').length > 1) {
           languageFolders = "{" + grunt.option('languages') + "}";
