@@ -11,7 +11,7 @@ module.exports = function(grunt) {
           var listOfObjectTypes = ['course', 'menu', 'page', 'article', 'block', 'component' ];
 
           var jsonext = grunt.config('jsonext');
-          var coursedir = grunt.option("outputdir") || grunt.config('coursedir');
+          var coursedir = grunt.config('coursedir');
 
           // Go through each course folder inside the <%= sourcedir %>course directory
           grunt.file.expand({filter: 'isDirectory'}, path.join(coursedir, '*')).forEach(function(path) {
