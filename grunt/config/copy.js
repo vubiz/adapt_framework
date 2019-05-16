@@ -2,6 +2,8 @@ module.exports = function (grunt, options) {
 
     var _ = require("underscore");
 
+    var helpers = require("../helpers")(grunt);
+
     var getUnixPath = function(filepath) {
         // convert to unix style slashes
         return filepath.replace(/\\/g,"/");
@@ -31,7 +33,7 @@ module.exports = function (grunt, options) {
                     expand: true,
                     src: ['<%= languages %>/**/*', '!**/*.<%= jsonext %>'],
                     cwd: '<%= coursedir %>/',
-                    dest: '<%= outputdir %>/course'
+                    dest: '<%= outputcoursedir %>/'
                 }
             ]
         },
@@ -41,7 +43,7 @@ module.exports = function (grunt, options) {
                     expand: true,
                     src: ['<%= languages %>/*.<%= jsonext %>'],
                     cwd: '<%= coursedir %>/',
-                    dest: '<%= outputdir %>/course/'
+                    dest: '<%= outputcoursedir %>/'
                 }
             ]
         }
@@ -232,8 +234,10 @@ module.exports = function (grunt, options) {
             ]
         }
     };
+    
+    var { coursedir, outputcoursedir } = helpers.generateConfigData();
 
-    if (grunt.option("outputdir")) return mandatoryTasks;
+    if (coursedir === outputcoursedir) return mandatoryTasks;
 
     return _.extend({}, nonServerTasks, mandatoryTasks);
 
