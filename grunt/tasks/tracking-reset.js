@@ -10,10 +10,10 @@ module.exports = function(grunt) {
         });
 
         var isOutputDir = (grunt.option('outputdir') && grunt.option('outputdir').slice(-5) !== "build");
-        var sourcedir = isOutputDir ? grunt.option('outputdir') : grunt.config('sourcedir');
+        var coursedir = isOutputDir ? grunt.config('outputcoursedir') : grunt.config('coursedir');
 
-        var blocksFiles = grunt.file.expand(path.join(sourcedir, options.blocksFile));
-        var courseFiles = grunt.file.expand(path.join(sourcedir, options.courseFile));
+        var blocksFiles = grunt.file.expand(path.join(coursedir, options.blocksFile));
+        var courseFiles = grunt.file.expand(path.join(coursedir, options.courseFile));
 
         for (var i = 0; i < blocksFiles.length; i++) {
             resetTrackingIds(blocksFiles[i], courseFiles[i]);
